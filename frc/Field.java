@@ -10,4 +10,10 @@ public class Field{
 	public static final int imageY = 690;
 	public static final int fieldXCM = 1036;
 	public static final int fieldYCM = 511;
+	public static int getPixelX(double cm) {
+		return (int) (imageX * (cm/fieldXCM));
+	}
+	public static int getPixelY(double cm) {
+		return (int) (imageY * (cm/fieldYCM));
+	}
 }
