@@ -21,36 +21,25 @@ public class Viewer{
 		pane.setLayout(new BorderLayout());
 		// Creating robot
 		Robot bot = new Robot();
-		JPanel renderPanel = new JPanel(){
-			public void paintComponent(Graphics g){
-				// GETTING 2D GRAPHICS
-				Graphics2D g2d = (Graphics2D) g;
-				// DRAWING BACKGROUND
-				g2d.setColor(Color.WHITE);
-				g2d.fillRect(0, 0, getWidth(), getHeight());
-				// DRAWING FIELD
-				BufferedImage fieldImage = null;
-				try{
-					fieldImage = ImageIO.read(Field.powerUp);
-				}catch(IOException e){
-					e.printStackTrace();
-				}
-				g2d.drawImage(fieldImage, 0, 0, null);
-				BufferedImage botImage = bot.getRobotImage();
-				BufferedImageHelp.drawRotatedImage(g2d, botImage, Field.getPixelX(bot.x)-botImage.getWidth()/2, Field.getPixelY(bot.y)-botImage.getHeight()/2, (int) bot.heading);
-			}
-		};
+		// Creating and Configuring JPanel & JFrame
+		ViewPanel renderPanel = new ViewPanel();
 		pane.add(renderPanel, BorderLayout.CENTER);
 		frame.setResizable(false);
 		frame.setSize(1406, 800);
 		frame.setVisible(true);
+		// Game Loop
 		while(true) {
+			// UPDATING ROBOT
+			bot.heading++;
+			// FEEDING INFO TO JPANEL
+			renderPanel.bot = bot;
+			// REPAINTING
+			renderPanel.repaint();
+			// WAITING UNTIL NEXT TICK
 			long curTime = System.currentTimeMillis();
-			while(System.currentTimeMillis() - curTime < 1000) {
+			while(System.currentTimeMillis() - curTime < 5) {
 				
 			}
-			bot.heading++;
-			renderPanel.repaint();
 		}
 	}
 }
