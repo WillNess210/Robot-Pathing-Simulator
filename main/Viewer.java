@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import frc.*;
 import tools.BufferedImageHelp;
+import tools.Point;
 import user.User;
 
 public class Viewer{
@@ -51,13 +52,14 @@ public class Viewer{
 			// REPAINTING
 			renderPanel.repaint();
 			// DEBUG PRINT STATEMENTS
+			System.out.println("----------------------------");
+			System.out.println("Coords: " + bot.toString());
 			System.out.println("setLeft: " + bot.setLeft);
 			System.out.println("setRight: " + bot.setRight);
 			System.out.println("Velocity Left: " + bot.leftSpeed);
 			System.out.println("Velocity Right: " + bot.rightSpeed);
 			System.out.println("Left Encoder: " + bot.getLeftEncoderDistance());
 			System.out.println("Right Encoder: " + bot.getRightEncoderDistance());
-			System.out.println("xDif: " + (Field.fieldXCM/2 - bot.getLeftEncoderDistance()));
 			// SETTING LAST TIME
 			lastTime = startTime;
 		}

@@ -78,7 +78,7 @@ public class Robot extends Point{
 		this.lastBot = new Robot(this);
 		// GETTING TIME DIFFERENCE
 		double difference = endTime - startTime; // time to sim
-		double secondsTaken = difference / 1000; // factor to multiply speed by to account for time taken
+		double secondsTaken = difference / (1000 * Field.slowMoFactor); // factor to multiply speed by to account for time taken
 		// UPDATING SIDE VELOCITY BASED ON USER INPUT
 		this.leftSpeed += (this.setLeft * Field.motorPower) * secondsTaken;
 		this.rightSpeed += (this.setRight * Field.motorPower) * secondsTaken;
