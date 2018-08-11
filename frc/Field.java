@@ -18,8 +18,9 @@ public class Field{
 	}
 	// PHYSICS SETTINGS
 	public static double friction = 0.1;
-	public static double minSpeedToKeepMoving = 2;
-	public static double minSpeedToStartMoving = 3;
+	public static double minPowerToKeepMoving = 0.1;
+	public static double minSpeedToKeepMoving = 4;
+	public static double minPowerToStartMoving = 0.25;
 	public static double motorPower = 400;
 	public static double slowMoFactor = 1; // 2 is 2x slower, 4 is 4x slower, 0.5 is 2x faster, etc.. 1 is normal
 }

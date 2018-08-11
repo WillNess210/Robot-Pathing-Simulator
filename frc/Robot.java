@@ -66,48 +66,49 @@ public class Robot extends Point{
 	public Point getRightSide(){ // cm coordinates, not pixel coordinates
 		double width = robotWidthCM / 2;
 		double ang = Math.toRadians(-heading);
-		return new Point(this.getX() + width*Math.sin(ang), this.getY() + width*Math.cos(ang));
+		return new Point(this.getX() + width * Math.sin(ang), this.getY() + width * Math.cos(ang));
 	}
 	public Point getLeftSide(){ // cm coordinates, not pixel coordinates
 		double width = robotWidthCM / 2;
 		double ang = Math.toRadians(-heading);
-		return new Point(this.getX() - width*Math.sin(ang), this.getY() - width*Math.cos(ang));
+		return new Point(this.getX() - width * Math.sin(ang), this.getY() - width * Math.cos(ang));
 	}
 	public void tick(long startTime, long endTime){
 		// UPDATING LAST BOT
 		this.lastBot = new Robot(this);
 		// GETTING TIME DIFFERENCE
 		double difference = endTime - startTime; // time to sim
-		double secondsTaken = difference / (1000 * Field.slowMoFactor); // factor to multiply speed by to account for time taken
+		double secondsTaken = difference / (1000 * Field.slowMoFactor); // factor to multiply speed by to account for
+																		// time taken
 		// UPDATING SIDE VELOCITY BASED ON USER INPUT
 		this.leftSpeed += (this.setLeft * Field.motorPower) * secondsTaken;
 		this.rightSpeed += (this.setRight * Field.motorPower) * secondsTaken;
-		boolean canMoveLeft = true;
-		boolean canMoveRight = true;
 		// CHECKING LEFT SIDE FOR MINIMUM SPEEDS
-		if(lastBot.leftSpeed == 0 && Math.abs(this.leftSpeed) < Field.minSpeedToStartMoving){
-			canMoveLeft = false;
-		}else if(Math.abs(this.leftSpeed) < Field.minSpeedToKeepMoving){
-			canMoveLeft = false;
+		if(lastBot.leftSpeed == 0 && Math.abs(this.setLeft) < Field.minPowerToStartMoving){
+			this.leftSpeed = 0;
+		}else if(Math.abs(this.leftSpeed) < Field.minSpeedToKeepMoving
+				&& Math.abs(this.setLeft) < Field.minPowerToKeepMoving){
+			this.leftSpeed = 0;
 		}
 		// CHECKING RIGHT SIDE FOR MINIMUM SPEEDS
-		if(lastBot.rightSpeed == 0 && this.rightSpeed < Field.minSpeedToStartMoving){
-			canMoveRight = false;
-		}else if(this.rightSpeed < Field.minSpeedToKeepMoving){
-			canMoveRight = false;
+		if(lastBot.rightSpeed == 0 && Math.abs(this.setRight) < Field.minPowerToStartMoving){
+			this.rightSpeed = 0;
+		}else if(Math.abs(this.rightSpeed) < Field.minSpeedToKeepMoving
+				&& Math.abs(this.setRight) < Field.minPowerToKeepMoving){
+			this.rightSpeed = 0;
 		}
 		// UPDATING ROBOT BASED ON CURRENT SPEED
-		if(leftSpeed == rightSpeed && canMoveLeft){
+		if(leftSpeed == rightSpeed && leftSpeed != 0){
 			double distanceTraveled = leftSpeed * secondsTaken;
 			double newX = this.getX() + distanceTraveled * Math.cos(Math.toRadians(this.heading));
 			double newY = this.getY() + distanceTraveled * Math.sin(Math.toRadians(this.heading));
 			this.setX(newX);
 			this.setY(newY);
-		}else if(leftSpeed == -rightSpeed && canMoveLeft){
+		}else if(leftSpeed == -rightSpeed){
 			double angSpeed = (leftSpeed - rightSpeed) / robotWidthCM; // angular velocity
 			double changeAngle = angSpeed * secondsTaken;
 			heading = Math.toDegrees(changeAngle) + heading;
-		}else if(canMoveLeft || canMoveRight){
+		}else{
 			double angSpeed = (leftSpeed - rightSpeed) / robotWidthCM; // angular velocity
 			double ICCDist = (robotWidthCM / 2) * (leftSpeed + rightSpeed) / (leftSpeed - rightSpeed); // distance to
 																										// turning point
@@ -131,11 +132,11 @@ public class Robot extends Point{
 		encoderLeft += this.getLeftSide().getDistance(lastBot.getLeftSide()) * Math.signum(this.leftSpeed);
 		encoderRight += this.getRightSide().getDistance(lastBot.getRightSide()) * Math.signum(this.rightSpeed);
 		// BOUNDING HEADING to [-180, 180]
-		if(heading > 180) {
+		if(heading > 180){
 			heading += 180;
 			heading = heading % 360;
 			heading -= 180;
-		}else if(heading < -180) {
+		}else if(heading < -180){
 			heading = -heading; // flipping to positive
 			heading += 180; // running same operation as above
 			heading = heading % 360;
@@ -149,25 +150,25 @@ public class Robot extends Point{
 		this.rightSpeed *= frictionToApply;
 	}
 	// FUNCTIONS FOR USER TO INTERACT WITH
-	public void setLeftPower(double a) {
+	public void setLeftPower(double a){
 		a = Math.max(Math.min(a, 1), -1); // bounds a to [-1, 1]
 		this.setLeft = a;
 	}
-	public void setRightPower(double a) {
+	public void setRightPower(double a){
 		a = Math.max(Math.min(a, 1), -1); // bounds a to [-1, 1]
 		this.setRight = a;
 	}
-	public void resetEncoders() {
+	public void resetEncoders(){
 		this.encoderLeft = 0;
 		this.encoderRight = 0;
 	}
-	public double getLeftEncoderDistance() {
+	public double getLeftEncoderDistance(){
 		return encoderLeft;
 	}
-	public double getRightEncoderDistance() {
+	public double getRightEncoderDistance(){
 		return encoderRight;
 	}
-	public double getGyroAngle() {
+	public double getGyroAngle(){
 		return heading;
 	}
 }
