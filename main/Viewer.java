@@ -60,6 +60,7 @@ public class Viewer{
 			System.out.println("Velocity Right: " + bot.rightSpeed);
 			System.out.println("Left Encoder: " + bot.getLeftEncoderDistance());
 			System.out.println("Right Encoder: " + bot.getRightEncoderDistance());
+			System.out.println("Gyro Angle: " + bot.getGyroAngle());
 			// SETTING LAST TIME
 			lastTime = startTime;
 		}
