@@ -85,9 +85,9 @@ public class Robot extends Point{
 		boolean canMoveLeft = true;
 		boolean canMoveRight = true;
 		// CHECKING LEFT SIDE FOR MINIMUM SPEEDS
-		if(lastBot.leftSpeed == 0 && this.leftSpeed < Field.minSpeedToStartMoving){
+		if(lastBot.leftSpeed == 0 && Math.abs(this.leftSpeed) < Field.minSpeedToStartMoving){
 			canMoveLeft = false;
-		}else if(this.leftSpeed < Field.minSpeedToKeepMoving){
+		}else if(Math.abs(this.leftSpeed) < Field.minSpeedToKeepMoving){
 			canMoveLeft = false;
 		}
 		// CHECKING RIGHT SIDE FOR MINIMUM SPEEDS
@@ -128,8 +128,20 @@ public class Robot extends Point{
 			heading = Math.toDegrees(changeAngle) + heading;
 		}
 		// UPDATING ENCODERS BASED ON NEW POSITION
-		encoderLeft += this.getLeftSide().getDistance(lastBot.getLeftSide());
-		encoderRight += this.getRightSide().getDistance(lastBot.getRightSide());
+		encoderLeft += this.getLeftSide().getDistance(lastBot.getLeftSide()) * Math.signum(this.leftSpeed);
+		encoderRight += this.getRightSide().getDistance(lastBot.getRightSide()) * Math.signum(this.rightSpeed);
+		// BOUNDING HEADING to [-180, 180]
+		if(heading > 180) {
+			heading += 180;
+			heading = heading % 360;
+			heading -= 180;
+		}else if(heading < -180) {
+			heading = -heading; // flipping to positive
+			heading += 180; // running same operation as above
+			heading = heading % 360;
+			heading -= 180;
+			heading = -heading; // flipping to negative
+		}
 		// FACTORING IN FRICTION AND STUFF
 		double friction = Field.friction;
 		double frictionToApply = 1 - ((1 - friction) * secondsTaken);
@@ -138,10 +150,12 @@ public class Robot extends Point{
 	}
 	// FUNCTIONS FOR USER TO INTERACT WITH
 	public void setLeft(double a) {
+		a = Math.max(Math.min(a, 1), -1); // bounds a to [-1, 1]
 		this.setLeft = a;
 	}
-	public void setRight(double b) {
-		this.setRight = b;
+	public void setRight(double a) {
+		a = Math.max(Math.min(a, 1), -1); // bounds a to [-1, 1]
+		this.setRight = a;
 	}
 	public void resetEncoders() {
 		this.encoderLeft = 0;
@@ -152,5 +166,8 @@ public class Robot extends Point{
 	}
 	public double getRightEncoderDistance() {
 		return encoderRight;
+	}
+	public double getGyroAngle() {
+		return heading;
 	}
 }

@@ -38,11 +38,8 @@ public class Viewer{
 			
 		}
 		// Game Loop
-		bot.leftSpeed = 0;
-		bot.rightSpeed = 0;
-		bot.heading = 0;
 		long lastTime = System.currentTimeMillis();
-		while(frame.isEnabled()){
+		while(frame.isEnabled()){ // TODO add slowmo options
 			long startTime = System.currentTimeMillis();
 			// GIVING INFO TO USER
 			User.robot = bot;
@@ -54,9 +51,13 @@ public class Viewer{
 			// REPAINTING
 			renderPanel.repaint();
 			// DEBUG PRINT STATEMENTS
-			System.out.println("Velocity: " + bot.leftSpeed);
+			System.out.println("setLeft: " + bot.setLeft);
+			System.out.println("setRight: " + bot.setRight);
+			System.out.println("Velocity Left: " + bot.leftSpeed);
+			System.out.println("Velocity Right: " + bot.rightSpeed);
 			System.out.println("Left Encoder: " + bot.getLeftEncoderDistance());
 			System.out.println("Right Encoder: " + bot.getRightEncoderDistance());
+			System.out.println("xDif: " + (Field.fieldXCM/2 - bot.getLeftEncoderDistance()));
 			// SETTING LAST TIME
 			lastTime = startTime;
 		}
