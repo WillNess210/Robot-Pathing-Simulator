@@ -149,11 +149,11 @@ public class Robot extends Point{
 		this.rightSpeed *= frictionToApply;
 	}
 	// FUNCTIONS FOR USER TO INTERACT WITH
-	public void setLeft(double a) {
+	public void setLeftPower(double a) {
 		a = Math.max(Math.min(a, 1), -1); // bounds a to [-1, 1]
 		this.setLeft = a;
 	}
-	public void setRight(double a) {
+	public void setRightPower(double a) {
 		a = Math.max(Math.min(a, 1), -1); // bounds a to [-1, 1]
 		this.setRight = a;
 	}
