@@ -4,15 +4,18 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import frc.Field;
 
-public class DebugWindow{
+public class DebugWindow extends Container{
 	// CONSTANTS
-	public final int WIDTH = 200;
 	public final int HEIGHTPERITEM = 15;
+	// VARIABLES TO MOVE
+	public boolean moving = false;
+	public int offX = -1, offY = -1;
 	// Array to store + variable to keep track of input
 	String[][] display;
-	int numAdded;
+	public int numAdded = 0;
 	// CONSTRUCTOR
 	public DebugWindow(int numToDisplay){
+		super(Field.fieldXPix - 200, 1, 200, 0);
 		display = new String[numToDisplay][3];
 		for(int i = 0; i < numToDisplay; i++){
 			for(int j = 0; j < 3; j++){
@@ -27,6 +30,7 @@ public class DebugWindow{
 			display[numAdded][0] = title;
 			display[numAdded][1] = val1;
 			display[numAdded++][2] = val2;
+			this.height += HEIGHTPERITEM;
 		}
 	}
 	public void add(String title, double a, double b) {
@@ -34,6 +38,7 @@ public class DebugWindow{
 			display[numAdded][0] = title;
 			display[numAdded][1] = ((double)((int)(a*100)))/100 + "";
 			display[numAdded++][2] = ((double)((int)(b*100)))/100 + "";
+			this.height += HEIGHTPERITEM;
 		}
 	}
 	public void add(String title, double a, String b) {
@@ -41,6 +46,7 @@ public class DebugWindow{
 			display[numAdded][0] = title;
 			display[numAdded][1] = ((double)((int)(a*100)))/100 + "";
 			display[numAdded++][2] = b;
+			this.height += HEIGHTPERITEM;
 		}
 	}
 	public void add(String title, double a) {
@@ -48,6 +54,7 @@ public class DebugWindow{
 			display[numAdded][0] = title;
 			display[numAdded][1] = ((double)((int)(a*100)))/100 + "";
 			display[numAdded++][2] = "";
+			this.height += HEIGHTPERITEM;
 		}
 	}
 	// CLEARING TO EMPTY
@@ -58,20 +65,26 @@ public class DebugWindow{
 			}
 		}
 		numAdded = 0;
+		this.height = 0;
 	}
 	float alpha = 0.75f;
 	int type = AlphaComposite.SRC_OVER;
 	AlphaComposite composite = AlphaComposite.getInstance(type, alpha);
 	public void draw(Graphics2D g){
-		Color color = new Color(1, 1, 1, alpha);
-		g.setColor(color);
-		g.fillRect(Field.fieldXPix - this.WIDTH, 1, this.WIDTH - 1, this.HEIGHTPERITEM * this.numAdded);
-		g.setColor(Color.black);
-		g.drawRect(Field.fieldXPix - this.WIDTH, 1, this.WIDTH - 1, this.HEIGHTPERITEM * this.numAdded);
-		for(int i = 0; i < this.numAdded; i++){
-			for(int j = 0; j < display[i].length; j++){
-				g.drawString(display[i][j],(Field.fieldXPix - this.WIDTH) + (j * 60 + 2), (i * this.HEIGHTPERITEM) + 13);
+		if(this.empty() == false) {
+			Color color = new Color(1, 1, 1, alpha);
+			g.setColor(color);
+			g.fillRect((int)this.getX(), (int)this.getY(), (int)this.getWidth(), (int)this.getHeight());
+			g.setColor(Color.black);
+			g.drawRect((int)this.getX(), (int)this.getY(), (int)this.getWidth(), (int)this.getHeight());
+			for(int i = 0; i < this.numAdded; i++){
+				for(int j = 0; j < display[i].length; j++){
+					g.drawString(display[i][j],(int)this.getX() + (j * 60 + 2), (int)this.getY() + (i * this.HEIGHTPERITEM) + 12);
+				}
 			}
 		}
+	}
+	public boolean empty() {
+		return this.numAdded == 0;
 	}
 }

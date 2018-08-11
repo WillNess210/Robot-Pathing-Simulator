@@ -39,4 +39,7 @@ public class Point{
 	public String toString(){
 		return this.getX() + ", " + this.getY();
 	}
+	public boolean isWithin(Container b) {
+		return this.getX() >= b.getX() && this.getX() <= b.getX() + b.getWidth() && this.getY() >= b.getY() && this.getY() <= b.getY() + b.getHeight();
+	}
 }
