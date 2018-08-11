@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import frc.*;
 import tools.BufferedImageHelp;
+import tools.DebugWindow;
 import tools.Point;
 import user.User;
 
@@ -24,9 +25,12 @@ public class Viewer{
 		pane.setLayout(new BorderLayout());
 		// Creating robot
 		Robot bot = new Robot();
+		// Creating debugger
+		DebugWindow debug = new DebugWindow(10);
 		// Creating and Configuring JPanel & JFrame
 		ViewPanel renderPanel = new ViewPanel();
 		renderPanel.bot = bot;
+		renderPanel.debug = debug;
 		pane.add(renderPanel, BorderLayout.CENTER);
 		frame.setTitle("Robot Pathing Simulator");
 		frame.setResizable(false);
@@ -49,8 +53,6 @@ public class Viewer{
 			bot.tick(lastTime, startTime);
 			// FEEDING INFO TO JPANEL
 			renderPanel.bot = bot;
-			// REPAINTING
-			renderPanel.repaint();
 			// DEBUG PRINT STATEMENTS
 			System.out.println("----------------------------");
 			System.out.println("Coords: " + bot.toString());
@@ -61,6 +63,14 @@ public class Viewer{
 			System.out.println("Left Encoder: " + bot.getLeftEncoderDistance());
 			System.out.println("Right Encoder: " + bot.getRightEncoderDistance());
 			System.out.println("Gyro Angle: " + bot.getGyroAngle());
+			// DEBUG WINDOW ADDS
+			debug.clear();
+			debug.add("Coords: ", bot.getX(), bot.getY());
+			debug.add("Encoders: ", bot.getLeftEncoderDistance(), bot.getRightEncoderDistance());
+			debug.add("Velocity: ", bot.leftSpeed, bot.rightSpeed);
+			debug.add("Gyro: ", bot.getGyroAngle(), "");
+			// REPAINTING
+			renderPanel.repaint();
 			// SETTING LAST TIME
 			lastTime = startTime;
 		}

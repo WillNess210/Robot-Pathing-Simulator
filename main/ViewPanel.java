@@ -10,10 +10,12 @@ import javax.swing.JPanel;
 import frc.Field;
 import frc.Robot;
 import tools.BufferedImageHelp;
+import tools.DebugWindow;
 import tools.Point;
 
 public class ViewPanel extends JPanel{
 	Robot bot = null;
+	DebugWindow debug = null;
 	public void paintComponent(Graphics g){
 		// GETTING 2D GRAPHICS
 		Graphics2D g2d = (Graphics2D) g;
@@ -44,5 +46,8 @@ public class ViewPanel extends JPanel{
 		// GOAL LINE
 		int xGoal = Field.getPixelX(Field.fieldXCM/2);
 		g2d.drawLine(xGoal, 0, xGoal, this.getHeight());
+		if(debug != null) {
+			debug.draw(g2d);
+		}
 	}
 }
