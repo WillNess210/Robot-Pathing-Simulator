@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 public class BufferedImageHelp{
 	public static void drawRotatedImage(Graphics2D g, BufferedImage img, int x, int y, int angle) {
-		double rads = ((double) angle) / 180;
+		double rads = Math.toRadians(angle);
 		double locationX = img.getHeight() / 2;
 	    double locationY = img.getHeight() / 2;
 	    AffineTransform tx = AffineTransform.getRotateInstance(rads, locationX, locationY);
