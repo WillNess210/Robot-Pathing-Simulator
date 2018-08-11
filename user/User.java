@@ -4,11 +4,14 @@ import frc.Field;
 import frc.Robot;
 
 public class User{
-	public static Robot robot;
+	public Robot robot;
+	public User(Robot robot) {
+		this.robot = robot;
+	}
 	// ONLY HAVE USE TO THE FOLLOWING FUNCTIONS:
 	// setLeftPower(double), setRightPower(double), double getLeftEncoderDistance(), double getRightEncoderDistance(), double getGyroAngle()
 	// use these to program a awesome path planning
-	public static void robotPeriodic() {
+	public void robotPeriodic() {
 		// DEFAULT
 //		robot.setLeft(-1);
 //		robot.setRight(-1);

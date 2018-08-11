@@ -25,6 +25,7 @@ public class Viewer{
 		pane.setLayout(new BorderLayout());
 		// Creating robot
 		Robot bot = new Robot();
+		User user = new User(bot);
 		// Creating debugger
 		DebugWindow debug = new DebugWindow(10);
 		// Creating and Configuring JPanel & JFrame
@@ -46,9 +47,8 @@ public class Viewer{
 		long lastTime = System.currentTimeMillis();
 		while(frame.isEnabled()){ // TODO add slowmo options
 			long startTime = System.currentTimeMillis();
-			// GIVING INFO TO USER
-			User.robot = bot;
-			User.robotPeriodic();
+			// GETTING ACTION FROM USER
+			user.robotPeriodic();
 			// UPDATING BOT
 			bot.tick(lastTime, startTime);
 			// FEEDING INFO TO JPANEL
@@ -68,7 +68,7 @@ public class Viewer{
 			debug.add("Coords: ", bot.getX(), bot.getY());
 			debug.add("Encoders: ", bot.getLeftEncoderDistance(), bot.getRightEncoderDistance());
 			debug.add("Velocity: ", bot.leftSpeed, bot.rightSpeed);
-			debug.add("Gyro: ", bot.getGyroAngle(), "");
+			debug.add("Gyro: ", bot.getGyroAngle());
 			// REPAINTING
 			renderPanel.repaint();
 			// SETTING LAST TIME

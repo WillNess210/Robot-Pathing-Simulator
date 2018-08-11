@@ -44,8 +44,8 @@ public class ViewPanel extends JPanel{
 //		Point pointBot = bot.toPixelCoords();
 //		g2d.drawLine((int)ICC.getX(), (int)ICC.getY(), (int)pointBot.getX(), (int)pointBot.getY());
 		// GOAL LINE
-		int xGoal = Field.getPixelX(Field.fieldXCM/2);
-		g2d.drawLine(xGoal, 0, xGoal, this.getHeight());
+//		int xGoal = Field.getPixelX(Field.fieldXCM/2);
+//		g2d.drawLine(xGoal, 0, xGoal, this.getHeight());
 		if(debug != null) {
 			debug.draw(g2d);
 		}

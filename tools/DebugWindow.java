@@ -43,6 +43,13 @@ public class DebugWindow{
 			display[numAdded++][2] = b;
 		}
 	}
+	public void add(String title, double a) {
+		if(numAdded < display.length) {
+			display[numAdded][0] = title;
+			display[numAdded][1] = ((double)((int)(a*100)))/100 + "";
+			display[numAdded++][2] = "";
+		}
+	}
 	// CLEARING TO EMPTY
 	public void clear(){
 		for(int i = 0; i < numAdded; i++){
