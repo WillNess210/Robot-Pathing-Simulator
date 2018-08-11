@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import frc.*;
 import tools.BufferedImageHelp;
+import user.User;
 
 public class Viewer{
 	public static void main(String[] args){
@@ -31,22 +32,31 @@ public class Viewer{
 		frame.setSize(1406, 800);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// Waiting for initializing lag
+		long lagTime = System.currentTimeMillis();
+		while(System.currentTimeMillis() - lagTime < 2000) {
+			
+		}
 		// Game Loop
-		bot.leftSpeed = 100;
-		bot.rightSpeed = 200;
+		bot.leftSpeed = 0;
+		bot.rightSpeed = 0;
+		bot.heading = 0;
 		long lastTime = System.currentTimeMillis();
-		while(true){
-//			while(System.currentTimeMillis() - lastTime < 1){
-//			}
+		while(frame.isEnabled()){
 			long startTime = System.currentTimeMillis();
+			// GIVING INFO TO USER
+			User.robot = bot;
+			User.robotPeriodic();
 			// UPDATING BOT
-			System.out.println("TURN");
 			bot.tick(lastTime, startTime);
-			System.out.println("Robot: " + bot.toString());
 			// FEEDING INFO TO JPANEL
 			renderPanel.bot = bot;
 			// REPAINTING
 			renderPanel.repaint();
+			// DEBUG PRINT STATEMENTS
+			System.out.println("Velocity: " + bot.leftSpeed);
+			System.out.println("Left Encoder: " + bot.getLeftEncoderDistance());
+			System.out.println("Right Encoder: " + bot.getRightEncoderDistance());
 			// SETTING LAST TIME
 			lastTime = startTime;
 		}

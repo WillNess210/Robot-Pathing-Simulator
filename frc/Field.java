@@ -16,4 +16,9 @@ public class Field{
 	public static int getPixelY(double cm) {
 		return (int) (imageY * (cm/fieldYCM));
 	}
+	// PHYSICS SETTINGS
+	public static double friction = 0.1;
+	public static double minSpeedToKeepMoving = 2;
+	public static double minSpeedToStartMoving = 3;
+	public static double motorPower = 400;
 }
