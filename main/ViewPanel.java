@@ -44,7 +44,5 @@ public class ViewPanel extends JPanel{
 		// GOAL LINE
 		int xGoal = Field.getPixelX(Field.fieldXCM/2);
 		g2d.drawLine(xGoal, 0, xGoal, this.getHeight());
-		g2d.setColor(Color.BLUE);
-		g2d.drawLine(Field.fieldXCM/2, 0, Field.fieldXCM/2, this.getHeight());
 	}
 }
