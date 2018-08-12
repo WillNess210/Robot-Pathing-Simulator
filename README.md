@@ -5,3 +5,4 @@ A Java program built to simulate a robot for the purpose of practicing path plan
 ## Authors
 
 * **Will Ness** - *Main Developer* - [WillNess210](https://github.com/WillNess210)
+* **Nick Bradham** - *GUI Help* - [nickBnbradham](https://github.com/nickBnbradham)
