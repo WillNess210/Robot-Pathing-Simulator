@@ -15,17 +15,17 @@ public class UserBangBangExample{
 		double cmGoal = (Field.fieldXCM/2) - (robot.robotLengthCM/2);
 		// LEFT SIDE
 		if(robot.getLeftEncoderDistance() < cmGoal) {
-			robot.setLeftPower(0.5);
+			robot.setLeftPower(0.75);
 		}else if(robot.getLeftEncoderDistance() > cmGoal) {
-			robot.setLeftPower(-0.5);
+			robot.setLeftPower(-0.75);
 		}else {
 			robot.setLeftPower(0);
 		}
 		// RIGHT SIDE
 		if(robot.getRightEncoderDistance() < cmGoal) {
-			robot.setRightPower(0.5);
+			robot.setRightPower(0.75);
 		}else if(robot.getRightEncoderDistance() > cmGoal) {
-			robot.setRightPower(-0.5);
+			robot.setRightPower(-0.75);
 		}else {
 			robot.setRightPower(0);
 		}

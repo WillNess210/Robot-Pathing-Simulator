@@ -1,31 +1,29 @@
 package user;
-
 import frc.Field;
 import frc.Robot;
 
 public class User{
 	public Robot robot;
-	public User(Robot robot) {
+	public User(Robot robot){
 		this.robot = robot;
 	}
 	// ONLY HAVE USE TO THE FOLLOWING FUNCTIONS:
-	// setLeftPower(double) [-1,1], setRightPower(double) [-1,1], double getLeftEncoderDistance(), double getRightEncoderDistance(), double getGyroAngle()
+	// setLeftPower(double) [-1,1], setRightPower(double) [-1,1], double
+	// getLeftEncoderDistance(), double getRightEncoderDistance(), double
+	// getGyroAngle()
 	// use these to program a awesome path planning
-	long startTime = 0;
 	public void robotPeriodic() {
-		if(startTime == 0) {
-			startTime = System.currentTimeMillis();
-			robot.setLeftPower(0);
-			robot.setRightPower(0);
-		}else {
-			if(System.currentTimeMillis() - startTime > 1000) {
-				robot.setLeftPower(0);
-				robot.setRightPower(0);
-			}else {
-				robot.setLeftPower(1);
-				robot.setRightPower(1);
-			}
-		}
-		
+		double cmGoal = (Field.fieldXCM/2) - (robot.robotLengthCM/2);
+		double kP = 1.0/120.0;
+		double leftDif = cmGoal - robot.getLeftEncoderDistance();
+		double rightDif = cmGoal - robot.getRightEncoderDistance();
+		double angGoal = 0;
+		double aKP = 1.0/8.0;
+		double angDif = robot.getGyroAngle();
+		double leftY = leftDif * kP;
+		double rightY = rightDif * kP;
+		double aX = angDif * aKP;
+		robot.setLeftPower(leftY - aX);
+		robot.setRightPower(rightY + aX);
 	}
 }
