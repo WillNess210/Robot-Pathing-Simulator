@@ -83,6 +83,7 @@ public class Viewer{
 			}else{ // MAKE ROBOT RUN AS IT WOULD IN PERFECT CONDITIONS
 				bot.rightToLeftFactor = 1;
 			}
+			inconsis.cb.hovered = mouse.isWithin(inconsis.cb);
 			// ----------- \\
 			// ROBOT STUFF \\
 			long startTime = System.currentTimeMillis();
