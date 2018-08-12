@@ -12,18 +12,7 @@ public class User{
 	// setLeftPower(double) [-1,1], setRightPower(double) [-1,1], double getLeftEncoderDistance(), double getRightEncoderDistance(), double getGyroAngle()
 	// use these to program a awesome path planning
 	public void robotPeriodic() {
-		double cmGoal = (Field.fieldXCM/2) - (robot.robotLengthCM/2);
-		double kP = 1.0/120.0;
-		double leftDif = cmGoal - robot.getLeftEncoderDistance();
-		double rightDif = cmGoal - robot.getRightEncoderDistance();
-		double angKP = 1.0/1.5;
-		double headingGoal = 0;
-		double angDif = robot.getGyroAngle() - headingGoal;
-		double leftY = leftDif * kP;
-		double rightY = rightDif * kP;
-		double xPow = angDif * angKP;
-		
-		robot.setLeftPower(leftY - xPow);
-		robot.setRightPower(rightY + xPow);
+		robot.setLeftPower(0);
+		robot.setRightPower(0);
 	}
 }

@@ -40,7 +40,7 @@ public class Viewer{
 		DebugWindow debug = new DebugWindow(10);
 		renderPanel.debug = debug;
 		CheckBoxWithTitle inconsis = new CheckBoxWithTitle("Inconsistencies:", 10, 700, 180, 50);
-		inconsis.check();
+		//inconsis.check();
 		renderPanel.inconsis = inconsis;
 		// Creating and Configuring JPanel & JFrame
 		pane.add(renderPanel, BorderLayout.CENTER);
