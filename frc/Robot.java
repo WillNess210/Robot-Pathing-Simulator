@@ -83,8 +83,8 @@ public class Robot extends Point{
 		double secondsTaken = difference / (1000 * Field.slowMoFactor); // factor to multiply speed by to account for
 																		// time taken
 		// UPDATING SIDE VELOCITY BASED ON USER INPUT
-		this.leftSpeed += (this.setLeft * Field.motorPower) * secondsTaken;
-		this.rightSpeed += (this.setRight * Field.motorPower * this.rightToLeftFactor) * secondsTaken;
+		this.leftSpeed += (this.setLeft * this.setLeft * Field.motorPower) * secondsTaken;
+		this.rightSpeed += (this.setRight * this.setRight * Field.motorPower * this.rightToLeftFactor) * secondsTaken;
 		// CHECKING LEFT SIDE FOR MINIMUM SPEEDS
 		if(lastBot.leftSpeed == 0 && Math.abs(this.setLeft) < Field.minPowerToStartMoving){
 			this.leftSpeed = 0;
