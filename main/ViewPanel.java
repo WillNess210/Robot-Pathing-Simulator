@@ -12,12 +12,14 @@ import javax.swing.JPanel;
 import frc.Field;
 import frc.Robot;
 import tools.BufferedImageHelp;
-import tools.CheckBox;
 import tools.CheckBoxWithTitle;
 import tools.DebugWindow;
-import tools.Point;
 
 public class ViewPanel extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Robot bot = null;
 	DebugWindow debug = null;
 	CheckBoxWithTitle inconsis = null;
