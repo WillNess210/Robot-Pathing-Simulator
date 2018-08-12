@@ -40,7 +40,7 @@ public class Viewer{
 		DebugWindow debug = new DebugWindow(10);
 		renderPanel.debug = debug;
 		CheckBoxWithTitle inconsis = new CheckBoxWithTitle("Inconsistencies:", 10, 700, 180, 50);
-		//inconsis.check();
+		// inconsis.check();
 		renderPanel.inconsis = inconsis;
 		// Creating and Configuring JPanel & JFrame
 		pane.add(renderPanel, BorderLayout.CENTER);
@@ -49,11 +49,8 @@ public class Viewer{
 		frame.setSize(1406, 1000);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// Waiting for initializing lag
-		long lagTime = System.currentTimeMillis();
-		while(System.currentTimeMillis() - lagTime < 2500){
-		}
 		// Game Loop
+		long lagTime = System.currentTimeMillis();
 		long lastFrameTime = System.currentTimeMillis();
 		long lastRobotTime = System.currentTimeMillis();
 		long lastTime = System.currentTimeMillis();
@@ -89,13 +86,16 @@ public class Viewer{
 			// ----------- \\
 			// ROBOT STUFF \\
 			long startTime = System.currentTimeMillis();
-			// GETTING ACTION FROM USER
-			if(System.currentTimeMillis() - lastRobotTime > (1000.0 / 40.0)){ // this is to simulate how often the robot can update motors and such
-				user.robotPeriodic();
-				lastRobotTime = System.currentTimeMillis();
+			if(System.currentTimeMillis() - lagTime > 2500){
+				// GETTING ACTION FROM USER
+				if(System.currentTimeMillis() - lastRobotTime > (1000.0 / 40.0)){ // this is to simulate how often the
+																					// robot can update motors and such
+					user.robotPeriodic();
+					lastRobotTime = System.currentTimeMillis();
+				}
+				// UPDATING BOT
+				bot.tick(lastTime, startTime);
 			}
-			// UPDATING BOT
-			bot.tick(lastTime, startTime);
 			if(System.currentTimeMillis() - lastFrameTime > (1000.0 / 40.0)){ // Capping FPS
 				// DEBUG WINDOW ADDS
 				debug.clear();
