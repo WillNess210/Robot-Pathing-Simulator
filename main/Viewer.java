@@ -120,6 +120,7 @@ public class Viewer{
 				debug.add("Gyro: ", bot.getGyroAngle());
 				debug.add("Mouse: ", mouse.getX(), mouse.getY());
 				debug.add("Clicked: ", renderPanel.clicked ? 1.0 : 0.0);
+				debug.add("Powers: ", bot.setLeft, bot.setRight);
 				// REPAINTING
 				renderPanel.repaint();
 				lastFrameTime = System.currentTimeMillis();

@@ -3,15 +3,14 @@ package user;
 import frc.Field;
 import frc.Robot;
 
-public class User{
+public class UserDriveStraightExample{
 	public Robot robot;
-	public User(Robot robot) {
+	public UserDriveStraightExample(Robot robot) {
 		this.robot = robot;
 	}
 	// ONLY HAVE USE TO THE FOLLOWING FUNCTIONS:
 	// setLeftPower(double) [-1,1], setRightPower(double) [-1,1], double getLeftEncoderDistance(), double getRightEncoderDistance(), double getGyroAngle()
 	// use these to program a awesome path planning
-	long startTime = 0;
 	public void robotPeriodic() {
 		double cmGoal = (Field.fieldXCM/2) - (robot.robotLengthCM/2);
 		double kP = 1.0/120.0;
