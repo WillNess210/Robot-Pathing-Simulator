@@ -3,9 +3,9 @@ package user;
 import frc.Field;
 import frc.Robot;
 
-public class User{
+public class UserProportionalExample{
 	public Robot robot;
-	public User(Robot robot) {
+	public UserProportionalExample(Robot robot) {
 		this.robot = robot;
 	}
 	// ONLY HAVE USE TO THE FOLLOWING FUNCTIONS:
@@ -16,14 +16,7 @@ public class User{
 		double kP = 1.0/120.0;
 		double leftDif = cmGoal - robot.getLeftEncoderDistance();
 		double rightDif = cmGoal - robot.getRightEncoderDistance();
-		double angKP = 1.0/1.5;
-		double headingGoal = 0;
-		double angDif = robot.getGyroAngle() - headingGoal;
-		double leftY = leftDif * kP;
-		double rightY = rightDif * kP;
-		double xPow = angDif * angKP;
-		
-		robot.setLeftPower(leftY - xPow);
-		robot.setRightPower(rightY + xPow);
+		robot.setLeftPower(leftDif * kP);
+		robot.setRightPower(rightDif * kP);
 	}
 }

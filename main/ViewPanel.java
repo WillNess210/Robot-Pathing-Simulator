@@ -12,12 +12,15 @@ import javax.swing.JPanel;
 import frc.Field;
 import frc.Robot;
 import tools.BufferedImageHelp;
+import tools.CheckBox;
+import tools.CheckBoxWithTitle;
 import tools.DebugWindow;
 import tools.Point;
 
 public class ViewPanel extends JPanel{
 	Robot bot = null;
 	DebugWindow debug = null;
+	CheckBoxWithTitle inconsis = null;
 	public boolean clicked = false;
 	public ViewPanel() {
 		addMouseListener(new MouseAdapter() {
@@ -49,10 +52,12 @@ public class ViewPanel extends JPanel{
 		BufferedImage botImage = bot.getRobotImage();
 		BufferedImageHelp.drawRotatedImage(g2d, botImage, Field.getPixelX(bot.getX())-botImage.getWidth()/2, Field.getPixelY(bot.getY())-botImage.getHeight()/2, (int) bot.heading);
 		// DRAWING DEBUG
+		
+		if(inconsis != null) {
+			inconsis.draw(g2d);
+		}
 		if(debug != null) {
-			if(!debug.empty()) {
-				debug.draw(g2d);
-			}
+			debug.draw(g2d);
 		}
 	}
 }

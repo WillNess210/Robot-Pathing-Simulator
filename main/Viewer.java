@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.management.timer.Timer;
@@ -17,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import frc.*;
 import tools.BufferedImageHelp;
+import tools.CheckBox;
+import tools.CheckBoxWithTitle;
 import tools.DebugWindow;
 import tools.Point;
 import user.User;
@@ -27,15 +30,19 @@ public class Viewer{
 		JFrame frame = new JFrame();
 		Container pane = frame.getContentPane();
 		pane.setLayout(new BorderLayout());
-		// Creating robot
-		Robot bot = new Robot();
-		User user = new User(bot);
-		// Creating debugger
-		DebugWindow debug = new DebugWindow(10);
 		// Creating and Configuring JPanel & JFrame
 		ViewPanel renderPanel = new ViewPanel();
+		// Creating robot
+		Robot bot = new Robot();
 		renderPanel.bot = bot;
+		User user = new User(bot);
+		// CREATING CONTAINERS & BUTTONS
+		DebugWindow debug = new DebugWindow(10);
 		renderPanel.debug = debug;
+		CheckBoxWithTitle inconsis = new CheckBoxWithTitle("Inconsistencies:", 10, 700, 180, 50);
+		inconsis.check();
+		renderPanel.inconsis = inconsis;
+		// Creating and Configuring JPanel & JFrame
 		pane.add(renderPanel, BorderLayout.CENTER);
 		frame.setTitle("Robot Pathing Simulator");
 		frame.setResizable(false);
@@ -48,6 +55,7 @@ public class Viewer{
 		}
 		// Game Loop
 		long lastFrameTime = System.currentTimeMillis();
+		long lastRobotTime = System.currentTimeMillis();
 		long lastTime = System.currentTimeMillis();
 		boolean clicked = false, lastClicked = false;
 		while(frame.isEnabled()){
@@ -57,25 +65,35 @@ public class Viewer{
 			SwingUtilities.convertPointFromScreen(p, renderPanel);
 			Point mouse = new Point(p.getX(), p.getY());
 			clicked = renderPanel.clicked;
-			if(lastClicked == false && clicked == true) {
-				if(mouse.isWithin(debug)) {
+			if(lastClicked == false && clicked == true){ // JUST CLICKED
+				if(mouse.isWithin(debug)){
 					debug.moving = true;
 					debug.offX = (int) (mouse.getX() - debug.getX());
 					debug.offY = (int) (mouse.getY() - debug.getY());
+				}else if(mouse.isWithin(inconsis.cb)){
+					inconsis.check();
 				}
-			}else if(clicked == true) {
-				if(debug.moving) {
+			}else if(clicked == true){ // HELD DOWN
+				if(debug.moving){
 					debug.setX(mouse.getX() - debug.offX);
 					debug.setY(mouse.getY() - debug.offY);
 				}
-			}else if(lastClicked == true && clicked == false) {
+			}else if(lastClicked == true && clicked == false){ // JUST RELEASED
 				debug.moving = false;
+			}
+			if(inconsis.isChecked()){ // MAKE ROBOT LIKE AN ACTUAL ROBOT
+				bot.rightToLeftFactor = 1.05;
+			}else{ // MAKE ROBOT RUN AS IT WOULD IN PERFECT CONDITIONS
+				bot.rightToLeftFactor = 1;
 			}
 			// ----------- \\
 			// ROBOT STUFF \\
 			long startTime = System.currentTimeMillis();
 			// GETTING ACTION FROM USER
-			user.robotPeriodic();
+			if(System.currentTimeMillis() - lastRobotTime > (1000.0 / 40.0)){ // this is to simulate how often the robot can update motors and such
+				user.robotPeriodic();
+				lastRobotTime = System.currentTimeMillis();
+			}
 			// UPDATING BOT
 			bot.tick(lastTime, startTime);
 			if(System.currentTimeMillis() - lastFrameTime > (1000.0 / 40.0)){ // Capping FPS
@@ -90,9 +108,6 @@ public class Viewer{
 				// REPAINTING
 				renderPanel.repaint();
 				lastFrameTime = System.currentTimeMillis();
-				System.out.println("FRAME");
-			}else{
-				System.out.println("NON-FRAME");
 			}
 			// SETTING LASTS
 			lastTime = startTime;

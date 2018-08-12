@@ -15,6 +15,8 @@ public class Robot extends Point{
 	public static int robotWidthPix = Field.getPixelX(robotWidthCM);
 	public static int robotLengthPix = Field.getPixelY(robotLengthCM);
 	public static final File robotImage = new File("src/resources/Robot.png");
+	// ROBOT INCONSISTENCIES
+	public double rightToLeftFactor = 1.05; // 1 is straight, multiplied to right speed
 	// ROBOT DETAILS
 	public double heading, leftSpeed, rightSpeed, setLeft, setRight, encoderLeft, encoderRight;
 	public Point ICC;
@@ -82,7 +84,7 @@ public class Robot extends Point{
 																		// time taken
 		// UPDATING SIDE VELOCITY BASED ON USER INPUT
 		this.leftSpeed += (this.setLeft * Field.motorPower) * secondsTaken;
-		this.rightSpeed += (this.setRight * Field.motorPower) * secondsTaken;
+		this.rightSpeed += (this.setRight * Field.motorPower * this.rightToLeftFactor) * secondsTaken;
 		// CHECKING LEFT SIDE FOR MINIMUM SPEEDS
 		if(lastBot.leftSpeed == 0 && Math.abs(this.setLeft) < Field.minPowerToStartMoving){
 			this.leftSpeed = 0;

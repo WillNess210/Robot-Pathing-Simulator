@@ -7,9 +7,6 @@ import frc.Field;
 public class DebugWindow extends Container{
 	// CONSTANTS
 	public final int HEIGHTPERITEM = 15;
-	// VARIABLES TO MOVE
-	public boolean moving = false;
-	public int offX = -1, offY = -1;
 	// Array to store + variable to keep track of input
 	String[][] display;
 	public int numAdded = 0;
