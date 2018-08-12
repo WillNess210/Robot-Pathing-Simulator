@@ -103,7 +103,7 @@ public class Viewer{
 			long startTime = System.currentTimeMillis();
 			if(System.currentTimeMillis() - lagTime > 2500){
 				// GETTING ACTION FROM USER
-				if((System.currentTimeMillis() - lastRobotTime)/Field.slowMoFactor > (1000.0 / 40.0)){ // this is to simulate how often the
+				if((System.currentTimeMillis() - lastRobotTime)/Field.slowMoFactor > (1000.0 / 50.0)){ // this is to simulate how often the
 																					// robot can update motors and such
 					user.robotPeriodic();
 					lastRobotTime = System.currentTimeMillis();
