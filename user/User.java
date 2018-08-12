@@ -1,5 +1,6 @@
 package user;
 
+import frc.Field;
 import frc.Robot;
 
 public class User{
@@ -12,19 +13,11 @@ public class User{
 	// use these to program a awesome path planning
 	long startTime = 0;
 	public void robotPeriodic() {
-		if(startTime == 0) {
-			startTime = System.currentTimeMillis();
-			robot.setLeftPower(0);
-			robot.setRightPower(0);
-		}else {
-			if(System.currentTimeMillis() - startTime > 1000) {
-				robot.setLeftPower(0);
-				robot.setRightPower(0);
-			}else {
-				robot.setLeftPower(1);
-				robot.setRightPower(1);
-			}
-		}
-		
+		double cmGoal = (Field.fieldXCM/2) - (Robot.robotLengthCM/2);
+		double kP = 1.0/120.0;
+		double leftDif = cmGoal - robot.getLeftEncoderDistance();
+		double rightDif = cmGoal - robot.getRightEncoderDistance();
+		robot.setLeftPower(leftDif * kP);
+		robot.setRightPower(rightDif * kP);
 	}
 }

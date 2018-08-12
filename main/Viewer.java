@@ -1,12 +1,10 @@
 package main;
-
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.MouseInfo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -18,8 +16,8 @@ import tools.DebugWindow;
 import tools.Point;
 import user.User;
 
-public class Viewer {
-	public static void main(String[] args) {
+public class Viewer{
+	public static void main(String[] args){
 		// Creating frame & pane
 		JFrame frame = new JFrame();
 		Container pane = frame.getContentPane();
@@ -39,7 +37,6 @@ public class Viewer {
 		 */
 		// Creating and Configuring JPanel & JFrame
 		pane.add(renderPanel, BorderLayout.CENTER);
-
 		// Nick's Swing Code
 		final JPanel infoInput = new JPanel();
 		infoInput.setLayout(new GridLayout(0, 1));
@@ -47,14 +44,13 @@ public class Viewer {
 				new ImageIcon(Viewer.class.getResource("/resources/CheckBox.png")));
 		variability.setSelectedIcon(new ImageIcon(Viewer.class.getResource("/resources/CheckBoxSelected.png")));
 		variability.setFont(variability.getFont().deriveFont(32f));
-		variability.addActionListener(new ActionListener() {
-
+		variability.addActionListener(new ActionListener(){
 			@Override
-			public final void actionPerformed(final ActionEvent e) {
-				if (variability.isSelected()) { // MAKE ROBOT LIKE AN ACTUAL ROBOT
+			public final void actionPerformed(final ActionEvent e){
+				if(variability.isSelected()){ // MAKE ROBOT LIKE AN ACTUAL ROBOT
 					bot.rightToLeftFactor = 1.05;
 					System.out.println("IRL");
-				} else { // MAKE ROBOT RUN AS IT WOULD IN PERFECT CONDITIONS
+				}else{ // MAKE ROBOT RUN AS IT WOULD IN PERFECT CONDITIONS
 					bot.rightToLeftFactor = 1;
 					System.out.println("Sim");
 				}
@@ -63,7 +59,6 @@ public class Viewer {
 		variability.setSelected(true);
 		infoInput.add(variability);
 		pane.add(infoInput, BorderLayout.PAGE_END);
-
 		frame.setTitle("Robot Pathing Simulator");
 		frame.setResizable(false);
 		frame.setSize(1406, 800);
@@ -75,27 +70,27 @@ public class Viewer {
 		long lastRobotTime = System.currentTimeMillis();
 		long lastTime = System.currentTimeMillis();
 		boolean clicked = false, lastClicked = false;
-		while (frame.isEnabled()) {
+		while(frame.isEnabled()){
 			// ------------------------------------ \\
 			// HANDLING USER INPUT - MOUSE & CLICKS \\
 			java.awt.Point p = MouseInfo.getPointerInfo().getLocation();
 			SwingUtilities.convertPointFromScreen(p, renderPanel);
 			Point mouse = new Point(p.getX(), p.getY());
 			clicked = renderPanel.clicked;
-			if (lastClicked == false && clicked == true) { // JUST CLICKED
-				if (mouse.isWithin(debug)) {
+			if(lastClicked == false && clicked == true){ // JUST CLICKED
+				if(mouse.isWithin(debug)){
 					debug.moving = true;
 					debug.offX = (int) (mouse.getX() - debug.getX());
 					debug.offY = (int) (mouse.getY() - debug.getY());
 				} /*
 					 * else if (mouse.isWithin(inconsis.cb)) { inconsis.check(); }
 					 */
-			} else if (clicked == true) { // HELD DOWN
-				if (debug.moving) {
+			}else if(clicked == true){ // HELD DOWN
+				if(debug.moving){
 					debug.setX(mouse.getX() - debug.offX);
 					debug.setY(mouse.getY() - debug.offY);
 				}
-			} else if (lastClicked == true && clicked == false) { // JUST RELEASED
+			}else if(lastClicked == true && clicked == false){ // JUST RELEASED
 				debug.moving = false;
 			}
 			/*
@@ -106,9 +101,9 @@ public class Viewer {
 			// ----------- \\
 			// ROBOT STUFF \\
 			long startTime = System.currentTimeMillis();
-			if (System.currentTimeMillis() - lagTime > 2500) {
+			if(System.currentTimeMillis() - lagTime > 2500){
 				// GETTING ACTION FROM USER
-				if (System.currentTimeMillis() - lastRobotTime > (1000.0 / 40.0)) { // this is to simulate how often the
+				if(System.currentTimeMillis() - lastRobotTime > (1000.0 / 40.0)){ // this is to simulate how often the
 																					// robot can update motors and such
 					user.robotPeriodic();
 					lastRobotTime = System.currentTimeMillis();
@@ -116,7 +111,7 @@ public class Viewer {
 				// UPDATING BOT
 				bot.tick(lastTime, startTime);
 			}
-			if (System.currentTimeMillis() - lastFrameTime > (1000.0 / 40.0)) { // Capping FPS
+			if(System.currentTimeMillis() - lastFrameTime > (1000.0 / 40.0)){ // Capping FPS
 				// DEBUG WINDOW ADDS
 				debug.clear();
 				debug.add("Coords: ", bot.getX(), bot.getY());
