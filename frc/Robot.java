@@ -13,13 +13,13 @@ public class Robot extends Point{
 	public static int robotLengthCM = 83;
 	public static int robotWidthPix = Field.getPixelX(robotWidthCM);
 	public static int robotLengthPix = Field.getPixelY(robotLengthCM);
-	public static final File robotImage = new File("src/resources/Robot.png");
+	private static final File robotImage = new File("src/resources/Robot.png");
 	// ROBOT INCONSISTENCIES
-	public double rightToLeftFactor = 1.05; // 1 is straight, multiplied to right speed
+	private double rightToLeftFactor = 1.05; // 1 is straight, multiplied to right speed
 	// ROBOT DETAILS
-	public double heading, leftSpeed, rightSpeed, setLeft, setRight, encoderLeft, encoderRight;
-	public Point ICC;
-	public Robot lastBot = null;
+	private double heading, leftSpeed, rightSpeed, setLeft, setRight, encoderLeft, encoderRight;
+	private Point ICC;
+	private Robot lastBot = null;
 	public Robot(double x, double y, double heading){
 		super(x, y);
 		this.heading = heading;
@@ -171,5 +171,20 @@ public class Robot extends Point{
 	}
 	public double getGyroAngle(){
 		return heading;
+	}
+	public void setRightToLeftFactor(double a) {
+		this.rightToLeftFactor = a;
+	}
+	public double getLeftVelocity() {
+		return this.leftSpeed;
+	}
+	public double getRightVelocity() {
+		return this.rightSpeed;
+	}
+	public double getLeftSet() {
+		return this.setLeft;
+	}
+	public double getRightSet() {
+		return this.setRight;
 	}
 }

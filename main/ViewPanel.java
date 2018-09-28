@@ -52,7 +52,7 @@ public class ViewPanel extends JPanel{
 		g2d.drawImage(fieldImage, 0, 0, null);
 		// DRAWING ROBOT
 		BufferedImage botImage = bot.getRobotImage();
-		BufferedImageHelp.drawRotatedImage(g2d, botImage, Field.getPixelX(bot.getX())-botImage.getWidth()/2, Field.getPixelY(bot.getY())-botImage.getHeight()/2, (int) bot.heading);
+		BufferedImageHelp.drawRotatedImage(g2d, botImage, Field.getPixelX(bot.getX())-botImage.getWidth()/2, Field.getPixelY(bot.getY())-botImage.getHeight()/2, (int) bot.getGyroAngle());
 		// DRAWING DEBUG
 		
 		if(inconsis != null) {

@@ -48,10 +48,10 @@ public class Viewer{
 			@Override
 			public final void actionPerformed(final ActionEvent e){
 				if(variability.isSelected()){ // MAKE ROBOT LIKE AN ACTUAL ROBOT
-					bot.rightToLeftFactor = 1.05;
+					bot.setRightToLeftFactor(1.05);
 					System.out.println("IRL");
 				}else{ // MAKE ROBOT RUN AS IT WOULD IN PERFECT CONDITIONS
-					bot.rightToLeftFactor = 1;
+					bot.setRightToLeftFactor(1.05);
 					System.out.println("Sim");
 				}
 			}
@@ -116,11 +116,11 @@ public class Viewer{
 				debug.clear();
 				debug.add("Coords: ", bot.getX(), bot.getY());
 				debug.add("Encoders: ", bot.getLeftEncoderDistance(), bot.getRightEncoderDistance());
-				debug.add("Velocity: ", bot.leftSpeed, bot.rightSpeed);
+				debug.add("Velocity: ", bot.getLeftVelocity(), bot.getRightVelocity());
 				debug.add("Gyro: ", bot.getGyroAngle());
 				debug.add("Mouse: ", mouse.getX(), mouse.getY());
 				debug.add("Clicked: ", renderPanel.clicked ? 1.0 : 0.0);
-				debug.add("Powers: ", bot.setLeft, bot.setRight);
+				debug.add("Powers: ", bot.getLeftSet(), bot.getRightSet());
 				// REPAINTING
 				renderPanel.repaint();
 				lastFrameTime = System.currentTimeMillis();
