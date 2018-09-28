@@ -9,11 +9,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import tools.*;
 
 public class ViewPanel extends JPanel{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public boolean clicked = false;
 	public ViewPanel() {
@@ -35,5 +33,12 @@ public class ViewPanel extends JPanel{
 		g2d.setColor(Color.WHITE);
 		g2d.fillRect(0, 0, getWidth(), getHeight());
 		// DRAWING FIELD
+		BufferedImage fieldImage = null;
+		try{
+			fieldImage = ImageIO.read(Constants.powerUp);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		g2d.drawImage(fieldImage, 0, 0, null);
 	}
 }
