@@ -30,7 +30,7 @@ public class ViewPanel extends JPanel{
 		// GETTING 2D GRAPHICS
 		Graphics2D g2d = (Graphics2D) g;
 		// DRAWING BACKGROUND
-		g2d.setColor(Color.WHITE);
+		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.fillRect(0, 0, getWidth(), getHeight());
 		// DRAWING FIELD
 		BufferedImage fieldImage = null;
@@ -39,6 +39,12 @@ public class ViewPanel extends JPanel{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		g2d.drawImage(fieldImage, 0, 0, null);
+		g2d.drawImage(fieldImage, 25, 10, null);
+		// DRAWING MENU TOP BORDER
+		g2d.setColor(Color.BLACK);
+		g2d.fillRect(0, 10 + fieldImage.getHeight() + 10, getWidth(), 10);
+		// LIGHTER GRAY FOR MENU
+		g2d.setColor(new Color(230, 230, 230));
+		g2d.fillRect(0, 10 + fieldImage.getHeight() + 10 + 10, getWidth(), getHeight() - (10 + fieldImage.getHeight() + 10 + 10));
 	}
 }
