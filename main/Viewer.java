@@ -1,15 +1,7 @@
 package main;
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.GridLayout;
-import java.awt.MouseInfo;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 public class Viewer{
 	public static void main(String[] args){
