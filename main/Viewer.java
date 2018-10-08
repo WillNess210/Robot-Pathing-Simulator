@@ -5,8 +5,10 @@ import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
+import robot.RobotRep;
 
 public class Viewer{
+	public static RobotRep robot;
 	public static void main(String[] args){
 		// Creating frame & pane
 		JFrame frame = new JFrame();
@@ -15,16 +17,17 @@ public class Viewer{
 		pane.setLayout(new BorderLayout());
 		// Creating and Configuring JPanel & JFrame
 		ViewPanel renderPanel = new ViewPanel();
-		
 		pane.add(renderPanel, BorderLayout.CENTER);
 		frame.setTitle("Robot Pathing Simulator");
 		frame.setResizable(false);
 		frame.setSize(1456, 850);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// Creating & initializing robot
+		robot = new RobotRep();
 		// Game Loop
 		while(frame.isEnabled()){
-			
+			renderPanel.repaint();
 		}
 	}
 }

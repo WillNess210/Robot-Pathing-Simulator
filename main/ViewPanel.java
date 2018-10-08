@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import robot.RobotRep;
 import tools.*;
 
 public class ViewPanel extends JPanel{
@@ -30,7 +31,7 @@ public class ViewPanel extends JPanel{
 		// GETTING 2D GRAPHICS
 		Graphics2D g2d = (Graphics2D) g;
 		// DRAWING BACKGROUND
-		g2d.setColor(Color.LIGHT_GRAY);
+		g2d.setColor(Color.DARK_GRAY);
 		g2d.fillRect(0, 0, getWidth(), getHeight());
 		// DRAWING FIELD
 		BufferedImage fieldImage = null;
@@ -46,5 +47,12 @@ public class ViewPanel extends JPanel{
 		// LIGHTER GRAY FOR MENU
 		g2d.setColor(new Color(230, 230, 230));
 		g2d.fillRect(0, 10 + fieldImage.getHeight() + 10 + 10, getWidth(), getHeight() - (10 + fieldImage.getHeight() + 10 + 10));
+		
+		// DRAWING ROBOT
+		RobotRep robot = Viewer.robot;
+		BufferedImage botImage = robot.getRobotImage();
+		BufferedImageHelp.drawRotatedImage(g2d, botImage, Constants.getPixelX(robot.getX())-botImage.getWidth()/2, Constants.getPixelY(robot.getY())-botImage.getHeight()/2, (int) robot.getAngle());
+		// DRAWING DEBUG
+
 	}
 }
