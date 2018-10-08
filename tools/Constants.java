@@ -32,4 +32,7 @@ public class Constants{
 	public static final double minPowerToStartMoving = 0.25;
 	public static final double motorPower = 400;
 	public static final double slowMoFactor = 1; // 2 is 2x slower, 4 is 4x slower, 0.5 is 2x faster, etc.. 1 is normal
+	// TIME CONSTANTS
+	public static final int robotUpdatesPerSec = 20; //roborio updates 20 times per second
+	public static final int framesPerSec = 30; // max fps
 }

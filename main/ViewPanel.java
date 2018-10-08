@@ -45,7 +45,7 @@ public class ViewPanel extends JPanel{
 		g2d.setColor(Color.BLACK);
 		g2d.fillRect(0, 10 + fieldImage.getHeight() + 10, getWidth(), 10);
 		// LIGHTER GRAY FOR MENU
-		g2d.setColor(new Color(230, 230, 230));
+		g2d.setColor(new Color(215, 215, 215));
 		g2d.fillRect(0, 10 + fieldImage.getHeight() + 10 + 10, getWidth(), getHeight() - (10 + fieldImage.getHeight() + 10 + 10));
 		
 		// DRAWING ROBOT

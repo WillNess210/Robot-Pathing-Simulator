@@ -6,6 +6,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
 import robot.RobotRep;
+import tools.Constants;
+import tools.UpdateHandler;
 
 public class Viewer{
 	public static RobotRep robot;
@@ -26,8 +28,19 @@ public class Viewer{
 		// Creating & initializing robot
 		robot = new RobotRep();
 		// Game Loop
+		UpdateHandler frameUpdater = new UpdateHandler(Constants.framesPerSec);
+		UpdateHandler robotUpdater = new UpdateHandler(Constants.robotUpdatesPerSec);
 		while(frame.isEnabled()){
-			renderPanel.repaint();
+			// ROBOT UPDATING
+			if(robotUpdater.shouldUpdate()) {
+				double time = robotUpdater.timeSinceLastTick()/1000.0;
+				robot.tick(time);
+				
+			}
+			// FRAME UPDATING
+			if(frameUpdater.shouldUpdate()) {
+				renderPanel.repaint();
+			}
 		}
 	}
 }
