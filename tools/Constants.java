@@ -15,10 +15,10 @@ public class Constants{
 	public static final int fieldXPix = getPixelX(fieldXCM);
 	public static final int fieldYPix = getPixelY(fieldYCM);
 	public static int getPixelX(double cm) {
-		return (int) (imageX * (cm/fieldXCM));
+		return 30 + (int) (imageX * (cm/fieldXCM));
 	}
 	public static int getPixelY(double cm) {
-		return (int) (imageY * (cm/fieldYCM));
+		return 10 + (int) (imageY * (cm/fieldYCM));
 	}
 	// ROBOT SETTINGS
 	public static final int robotWidthCM = 71;
