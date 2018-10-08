@@ -10,7 +10,7 @@ import tools.Point;
 public class RobotRep extends Point{
 	private double angle;
 	public RobotRep() {
-		super(100, 100);
+		super(Constants.robotLengthCM/2, Constants.fieldYCM/2);
 		angle = 0;
 	}
 	public BufferedImage getRobotImage(){
