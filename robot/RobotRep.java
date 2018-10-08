@@ -3,11 +3,12 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import tools.AngleBounder;
 import tools.Constants;
 import tools.Point;
 
 public class RobotRep extends Point{
-	private double angle, setLeft, setRight, leftSpeed, rightSpeed, rightToLeftFactor;
+	private double angle, setLeft, setRight, leftSpeed, rightSpeed, rightToLeftFactor, leftEncoder, rightEncoder;
 	private Point ICC;
 	public RobotRep(){
 		super(Constants.robotLengthCM / 2, Constants.fieldYCM / 2);
@@ -17,6 +18,8 @@ public class RobotRep extends Point{
 		this.leftSpeed = 0;
 		this.rightSpeed = 0;
 		this.rightToLeftFactor = 1;
+		this.leftEncoder = 0;
+		this.rightEncoder = 0;
 		ICC = new Point();
 	}
 	public RobotRep(RobotRep b){
@@ -26,6 +29,8 @@ public class RobotRep extends Point{
 		this.leftSpeed = b.leftSpeed;
 		this.rightSpeed = b.rightSpeed;
 		this.rightToLeftFactor = b.rightToLeftFactor;
+		this.leftEnoder = b.leftEncoder;
+		this.rightEncoder = b.rightEncoder;
 		this.ICC = new Point(b.ICC);
 	}
 	public BufferedImage getRobotImage(){
@@ -81,5 +86,15 @@ public class RobotRep extends Point{
 			this.setY(newY);
 			angle = Math.toDegrees(changeAngle) + angle;
 		}
+		// UPDATING ENCODERS BASED ON NEW POSITION
+		encoderLeft += this.getLeftSide().getDistance(lastBot.getLeftSide()) * Math.signum(this.leftSpeed);
+		encoderRight += this.getRightSide().getDistance(lastBot.getRightSide()) * Math.signum(this.rightSpeed);
+		// BOUNDING HEADING to [-180, 180]
+		angle = AngleBounder.boundAngle(angle);
+		// FACTORING IN FRICTION AND STUFF
+		double friction = Constants.friction;
+		double frictionToApply = 1 - ((1 - friction) * secondsToSim);
+		this.leftSpeed *= frictionToApply;
+		this.rightSpeed *= frictionToApply;
 	}
 }
